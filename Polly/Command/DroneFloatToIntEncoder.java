@@ -1,4 +1,4 @@
-package PollysFlyingCircus;
+package Polly.Command;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;

@@ -1,4 +1,4 @@
-package PollysFlyingCircus;
+package Polly.Command;
 
 
 public class DroneCommand {
@@ -44,12 +44,14 @@ public class DroneCommand {
 		return pcmdATPrefix + sequenceNumber + "," + 
 				pcmdCommand.prefix + 
 				DroneFloatToIntEncoder.encode(parameter) + 
-				pcmdCommand.postfix;
+				pcmdCommand.postfix
+				+ "\r";
 	}
 
-	public String toString(int sequenceNumber, REF refCommand){
+	public static String toString(int sequenceNumber, REF refCommand){
 		return refATPrefix + sequenceNumber + "," + 
-				refCommand.value;
+				refCommand.value + 
+				"\r";
 	}
 
 }
