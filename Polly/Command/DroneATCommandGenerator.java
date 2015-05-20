@@ -1,68 +1,57 @@
 package Polly.Command;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class DroneATCommandGenerator {
 
-	private int seq = 1;
+	public static enum PCMD{
+		PITCH_GO_FORWARD(",1,", ",0,0,0");
 
-	private InetAddress inet_addr = null; 
-	private DatagramSocket atsocket = null;
-	private DatagramSocket ndsocket = null;	
+		private String prefix;
+		private String postfix;
 
-	private DatagramSocket socket;
+		private PCMD(String prefix, String  postfix){
+			this.prefix = prefix;
+			this.postfix = postfix;
+		}
 
-	public int getSequenceNumber(){
-		return seq;
-	}
-
-	//Transmit a raw string to the DroneConnection's socket
-	public void transmitString(String contents) throws IOException{
-		System.out.println("AT command sent: " + contents);
-		byte[] buffer = (contents + "\r").getBytes();
-		DatagramPacket packet = new DatagramPacket(buffer, buffer.length, inet_addr, 5556);
-		socket.send(packet);
-	}
-	
-	public void transmitStringLn(String contents) throws IOException{
-		transmitString(contents+"r");
-	}
-
-
-	//Tries to establish a connection with the drone. FAILS SILENTLY if unable to establish connection.  
-	public void tryEstablishConnection(){
-		byte[] ip_bytes = new byte[4];
-		ip_bytes[0] = (byte)192;
-		ip_bytes[1] = (byte)168;
-		ip_bytes[2] = (byte)1;
-		ip_bytes[3] = (byte)1;
-
-		try {
-			inet_addr = InetAddress.getByAddress(ip_bytes);
-
-			atsocket = new DatagramSocket();
-			ndsocket = new DatagramSocket();
-			atsocket.setSoTimeout(3000);
-			ndsocket.setSoTimeout(3000);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		public String getPrefix(){
+			return prefix;
+		}
+		public String getPostfix(){
+			return postfix;
 		}
 	}
 
+	public static enum REF{
+		TAKEOFF(290718208),
+		LAND(290717696);
 
-	public DroneATCommandGenerator() throws SocketException{
+		private int value;
 
-		tryEstablishConnection();
+		private REF(int value){
+			this.value = value;
+		}
+
+		public int getValue(){
+			return value;
+		}
 	}
 
+	private final static String pcmdATPrefix = "AT*PCMD=";
+	private final static String refATPrefix = "AT*REF=";
+	
+	public static String toString(int sequenceNumber, PCMD pcmdCommand, float parameter){
+		return pcmdATPrefix + sequenceNumber + "," + 
+				pcmdCommand.prefix + 
+				DroneFloatToIntEncoder.encode(parameter) + 
+				pcmdCommand.postfix
+				+ "\r";
+	}
+
+	public static String toString(int sequenceNumber, REF refCommand){
+		return refATPrefix + sequenceNumber + "," + 
+				refCommand.value + 
+				"\r";
+	}
 
 }
