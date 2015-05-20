@@ -31,22 +31,28 @@ public class Test {
 	public static void main(String args[]) throws Exception
 	{
 		Drone.initialise();
-		
-		//Drone.sendRawATCommand(DroneATCommandGenerator.toString(6, DroneATCommandGenerator.PCMD.PITCH_GO_FORWARD, -0.9f));
-		
-    //    Drone.sendRawATCommand("AT*CONFIG=1,\"control:altitude_max\",\"2000\"");
-	
 		Drone.takeOff();
 		
-		Drone.goForward(0.9f, 5000000);
+		Thread.sleep(2500);
 		
-		Thread.sleep(10000);
+		routine2();
 		
 		Drone.land();
-		
 		Drone.disconnect();
 	}
 	
+	private static void routine2() throws Exception{
+		Drone.goUp(0.3f, 5*100);
+		
+		Thread.sleep(1500);
+		
+		Drone.goUp(-0.3f, 5*100);
+	}
+	
+	private static void routine1(){
+//	    Drone.sendRawATCommand("AT*CONFIG=1,\"control:altitude_max\",\"2000\"");
+		
+	}
 
 	
 }
