@@ -1,4 +1,4 @@
-package Polly.Command;
+package polly.Command;
 
 
 public class Test {

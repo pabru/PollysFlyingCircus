@@ -1,4 +1,4 @@
-package Polly.Command;
+package polly.Command;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

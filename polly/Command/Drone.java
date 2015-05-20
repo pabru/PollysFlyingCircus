@@ -1,12 +1,11 @@
-package Polly.Command;
+package polly.Command;
 
 import java.io.IOException;
-
-import Polly.Timer;
-import Polly.Command.DroneATCommandGenerator;
-import Polly.Command.DroneATCommandGenerator.PCMD;
-
 import java.net.SocketException;
+
+import polly.Timer;
+import polly.Command.DroneATCommandGenerator;
+import polly.Command.DroneATCommandGenerator.PCMD;
 
 public class Drone {
 

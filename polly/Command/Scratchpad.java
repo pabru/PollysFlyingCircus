@@ -1,4 +1,4 @@
-package Polly.Command;
+package polly.Command;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;

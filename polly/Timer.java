@@ -1,4 +1,4 @@
-package Polly;
+package polly;
 
 public class Timer {
 	double startSystemTimeNanoseconds = 0;
