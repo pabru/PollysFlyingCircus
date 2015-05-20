@@ -32,34 +32,21 @@ public class Test {
 	{
 		Drone.initialise();
 		
-		Drone.sendRawATCommand(DroneCommand.toString(6, DroneCommand.PCMD.PITCH_GO_FORWARD, -0.9f));
+		//Drone.sendRawATCommand(DroneATCommandGenerator.toString(6, DroneATCommandGenerator.PCMD.PITCH_GO_FORWARD, -0.9f));
 		
-        Drone.sendRawATCommand("AT*CONFIG=1,\"control:altitude_max\",\"2000\"");
+    //    Drone.sendRawATCommand("AT*CONFIG=1,\"control:altitude_max\",\"2000\"");
 	
 		Drone.takeOff();
+		
+		Drone.goForward(0.9f, 5000000);
 		
 		Thread.sleep(10000);
 		
 		Drone.land();
 		
-		atsocket.close();
-    	ndsocket.close();
+		Drone.disconnect();
 	}
 	
-	public static void send_at_cmd(String at_cmd) throws Exception 
-    {
- 
-    	System.out.println("AT command: " + at_cmd);    	
-    	byte[] buffer = (at_cmd + "\r").getBytes();
-    	
-    	DatagramPacket packet = new DatagramPacket(buffer, buffer.length, inet_addr, 5556);
-    	
-    	atsocket.send(packet);
-    	System.out.println("Hello!");
-    	//sock.close();
-    	//socket.receive(packet); //AR.Drone does not send back ack message (like "OK")
-    	//System.out.println(new String(packet.getData(),0,packet.getLength()));   	
-    }
-	
+
 	
 }
