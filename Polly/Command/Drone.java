@@ -48,19 +48,14 @@ public class Drone {
 		sendRawATCommand("AT*FTRIM");
 	}
 	
-	public static void goForward(float speed, double durationNanoseconds) throws IOException{
-		Timer timer = new Timer();
-		timer.startTimer();
-		while (timer.getTimeElapsedNanoseconds()<durationNanoseconds){
-			//transmitPCMDCommand(PCMD.PITCH_GO_FORWARD, speed);
-		}
+	public static void goForward(float speed) throws IOException{
+		transmitPCMDCommand(PCMD.PITCH_GO_FORWARD, -speed);
 	}
-	public static void goUp(float speed, double durationNanoseconds) throws IOException{
-		Timer timer = new Timer();
-		timer.startTimer();
-		while (timer.getTimeElapsedNanoseconds()<durationNanoseconds){
-			transmitPCMDCommand(PCMD.ALTITUDE_GO_UP, speed);
-		}
+	public static void goUp(float speed) throws IOException{
+		transmitPCMDCommand(PCMD.ALTITUDE_GO_UP, speed);
+	}
+	public static void turnClockWise(float speed) throws IOException{
+		transmitPCMDCommand(PCMD.TURN_TURN_CLOCKWISE, speed);
 	}
 	
 	public static void sendRawATCommand(String atCommandString) throws IOException{
