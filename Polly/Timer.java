@@ -21,4 +21,7 @@ public class Timer {
 		startSystemTimeNanoseconds = 0;
 		stopSystemTimeNanoseconds = 0;
 	}
+	public Timer(){
+		startTimer();
+	}
 }
