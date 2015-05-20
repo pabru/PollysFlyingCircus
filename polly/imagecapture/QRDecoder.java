@@ -39,24 +39,36 @@ public class QRDecoder {
 	}
 	
 	public String DecodeQRCode(BufferedImage image) throws Exception {
+		System.out.println("here1");
 		Map<DecodeHintType, Object> whatHints = new EnumMap<DecodeHintType, Object>(
 				DecodeHintType.class);
 		whatHints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
 		whatHints.put(DecodeHintType.POSSIBLE_FORMATS,
 				EnumSet.allOf(BarcodeFormat.class));
 		whatHints.put(DecodeHintType.PURE_BARCODE, Boolean.FALSE);
+		System.out.println("here2");
 		LuminanceSource tmpSource = new BufferedImageLuminanceSource(image);
 		BinaryBitmap tmpBitmap = new BinaryBitmap(
 				new HybridBinarizer(tmpSource));
+		System.out.println("here3");
 		MultiFormatReader tmpBarcodeReader = new MultiFormatReader();
 		com.google.zxing.Result tmpResult;
 		String tmpFinalResult = "";
+		System.out.println("here4");
 		try {
+			System.out.println("here5");
+
 			if (whatHints != null && !whatHints.isEmpty()) {
+				System.out.println("here6");
 				tmpResult = tmpBarcodeReader.decode(tmpBitmap, whatHints);
+				System.out.println("here6.5");
+
 			} else {
+				System.out.println("here7");
+
 				tmpResult = tmpBarcodeReader.decode(tmpBitmap);
 			}
+			System.out.println("here8");
 			// setting results.
 			tmpFinalResult = String.valueOf(tmpResult.getText());
 		} catch (Exception tmpExcpt) {
