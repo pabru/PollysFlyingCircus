@@ -1,39 +1,16 @@
 package Polly.Command;
 
-import java.io.InputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.nio.ByteBuffer;
 
 public class Test {
-
-	
-	public static void qmain(String args[]) throws Exception
-    {
-    	Socket sock = new Socket("192.168.1.1", 5559);
-    	
-    	System.out.println("Here 1");
-        InputStream is = sock.getInputStream();
-        System.out.println("Here 2");
-        int read;
-        byte[] buffer = new byte[1024];
-        while((read = is.read(buffer)) != -1) 
-        {
-            String output = new String(buffer, 0, read);
-            System.out.print(output);
-            System.out.flush();
-        }
-        sock.close();
-    }
 	
 	public static void main(String args[]) throws Exception
 	{
 		Drone.initialise();
+		Drone.trimFlat();
+		Thread.sleep(2500);
 		Drone.takeOff();
 		
-		Thread.sleep(2500);
+		Thread.sleep(4000);
 		
 		routine2();
 		
@@ -42,11 +19,28 @@ public class Test {
 	}
 	
 	private static void routine2() throws Exception{
-		Drone.goUp(0.3f, 5*100);
 		
-		Thread.sleep(1500);
+		long t= System.currentTimeMillis();
+		long end = t+700;
+		while(System.currentTimeMillis() < end) {
+			Drone.goUp(1f);
+		}
 		
-		Drone.goUp(-0.3f, 5*100);
+		long t1= System.currentTimeMillis();
+		long end1 = t1+4000;
+		while(System.currentTimeMillis() < end1) {
+			
+			Drone.goForward(1f);
+		}
+		
+		
+//		for(int i=0; i<4000; ++i){
+//			Drone.turnClockWise(-0.1f);
+//		}
+//		
+//		for(int i=0; i<5000; ++i){
+//			Drone.goForward(0.7f);
+//		}
 	}
 	
 	private static void routine1(){
