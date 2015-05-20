@@ -4,7 +4,8 @@ package Polly.Command;
 public class DroneATCommandGenerator {
 
 	public static enum PCMD{
-		PITCH_GO_FORWARD(",1,", ",0,0,0");
+		//PITCH_GO_FORWARD("1,", ",0,0,0"),
+		ALTITUDE_GO_UP("1,0,0,", ",0");
 
 		private String prefix;
 		private String postfix;
