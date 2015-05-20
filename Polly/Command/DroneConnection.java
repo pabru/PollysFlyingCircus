@@ -21,6 +21,7 @@ public class DroneConnection {
 
 	//Transmit a raw string to the DroneConnection's socket
 	public void transmitString(String contents) throws IOException{
+		++seq;
 		System.out.println("AT command sent: " + contents);
 		byte[] buffer = (contents + "\r").getBytes();
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length, inet_addr, 5556);
@@ -28,7 +29,7 @@ public class DroneConnection {
 	}
 	
 	public void transmitStringLn(String contents) throws IOException{
-		transmitString(contents+"r");
+		transmitString(contents+"\r");
 	}
 
 
