@@ -239,6 +239,7 @@ class KeyboardController extends Frame implements KeyListener {
 				action = "Go Up (gaz+)";
 				at_cmd = "AT*PCMD=" + (seq++) + ",1,0,0," + intOfFloat(speed)
 						+ ",0";
+				System.err.println(intOfFloat(speed));
 			} else {
 				action = "Go Forward (pitch+)";
 				at_cmd = "AT*PCMD=" + (seq++) + ",1," + intOfFloat(speed)
