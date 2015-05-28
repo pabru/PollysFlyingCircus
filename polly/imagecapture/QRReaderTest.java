@@ -15,43 +15,41 @@ public class QRReaderTest {
 	static QRDecoder decoder = new QRDecoder();
 	static DroneCamera droneCamera = new DroneCamera();
 
-	public static void main(String[] args) {
-		// read QR code from image
+	public static String getQRBelow() {
+		// read QR code from imae
 		// System.out.println("QRCode from image: "+
 		// getQRString("exampleQRCode.png"));
 
 		// captureImageFromDrone
 		// ahead
-		System.out.println("running main");
+		//		System.out.println("running main");
 
-		boolean nullImage = true;
-		while (nullImage == true) {
-			System.out.println("taking picture");
-			BufferedImage aheadPicture = droneCamera.takePictureAhead();
-			// below
-			// BufferedImage belowPicture = droneCamera.takePictureBellow();;
-			// Decode images
-			//String AheadString = getQRString(aheadPicture);
-			String AheadString = QRDecoder(aheadPicture);
-			// System.out.println("QRCode from ahead Image: "+
-			// getQRString(belowPicture));
-			if (AheadString != "") {
-				System.out.println("QRCode from ahead Image: !" + AheadString+"!");
-				nullImage = false;
-			}
-		}
+		String BelowString = null;
+		System.out.println("taking picture");
+		BufferedImage BelowPicture = droneCamera.takePictureBellow();
+		// below
+		// BufferedImage belowPicture = droneCamera.takePictureBellow();;
+		// Decode images
+		//String AheadString = getQRString(aheadPicture);
+		BelowString = QRDecoder(BelowPicture);
+		// System.out.println("QRCode from ahead Image: "+
+		// getQRString(belowPicture));
+
+		System.out.println(BelowString!=null?("QRCode from ahead Image: !" + BelowString+"!"):"");
+
+		return BelowString;
 	}
-	
+
 	public static String QRDecoder(BufferedImage im) {
-	String decodedString = "";
-	QRCodeDecoder decoder = new QRCodeDecoder();
-	try {
-		decodedString = new String(decoder.decode(new J2SEImage(im)));
-	} catch (Exception E) {
-		decodedString = "";
+		String decodedString = "";
+		QRCodeDecoder decoder = new QRCodeDecoder();
+		try {
+			decodedString = new String(decoder.decode(new J2SEImage(im)));
+		} catch (Exception E) {
+			decodedString = "";
+		}
+		return (decodedString);
 	}
-	return (decodedString);
-}
 
 
 	/**
