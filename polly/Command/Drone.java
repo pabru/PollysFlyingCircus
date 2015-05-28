@@ -42,9 +42,12 @@ public class Drone {
 	}
 	public static void trimFlat() throws IOException{
 		try {
-			Thread.sleep(500);
+			Thread.sleep(200);
 		} catch (InterruptedException e) {e.printStackTrace();}
 		sendRawATCommand("AT*FTRIM");
+	}
+	public static void hoverStationary() throws IOException{
+		sendRawATCommand("AT*PCMD="+droneConnection.getSequenceNumber()+","+"1,0,0,0,0");
 	}
 	
 	public static void goForward(float speed) throws IOException{
