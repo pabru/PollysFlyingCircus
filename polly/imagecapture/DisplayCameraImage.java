@@ -70,7 +70,8 @@ public class DisplayCameraImage {
 			container = null;
 		}
 	}
-
+	//TODO: try and increase rate of pictures using
+	//videoCoder.getFrameRate(), videoCoder.setFrameRate(), videoCoder.setSampleRate()
 	@SuppressWarnings("deprecation")
 	static public BufferedImage CaptureDroneImage() throws Exception {
 		socket_video_tcp = new Socket("192.168.1.1", 5555);
