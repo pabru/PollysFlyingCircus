@@ -6,6 +6,14 @@ import jp.sourceforge.qrcode.QRCodeDecoder;
 
 public class QRDecoder {
 
+	/**
+	 * Attempt to decode a QR code in a buffered image
+	 * 
+	 * @param im
+	 *            A buffered image that possibly contains a QR code
+	 * @return The string of the QRCode. Return empty string if QR code can not
+	 *         be deciphered
+	 */
 	public String decodeImage(BufferedImage im) {
 		String decodedString = "";
 		QRCodeDecoder decoder = new QRCodeDecoder();

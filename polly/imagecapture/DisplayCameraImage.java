@@ -30,9 +30,7 @@ public class DisplayCameraImage {
 	 */
 	static int cameraSelection = 0;
 
-
-
-	public static BufferedImage takePicture() {
+	public static BufferedImage takePicture() {// was main class in example code
 		byte[] ip_bytes = new byte[4];
 		ip_bytes[0] = (byte) 192;
 		ip_bytes[1] = (byte) 168;
@@ -42,13 +40,13 @@ public class DisplayCameraImage {
 		try {
 			inet_addr = InetAddress.getByAddress(ip_bytes);
 			atsocket = new DatagramSocket();
-	
+
 			send_at_cmd("AT*CONFIG=605,\"video:video_channel\",\""
 					+ cameraSelection + "\"");
 			openJavaWindow();
 			BufferedImage im = CaptureDroneImage();
 			updateJavaWindow(im);
-			CloseDrone();
+			CloseDrone();// ?
 			atsocket.close();
 			return im;
 		} catch (Exception e) {
@@ -208,7 +206,7 @@ public class DisplayCameraImage {
 		atsocket.send(packet);
 		Thread.sleep(250);
 	}
-	
+
 	public static void setCameraSelection(int cameraSelection) {
 		DisplayCameraImage.cameraSelection = cameraSelection;
 	}
