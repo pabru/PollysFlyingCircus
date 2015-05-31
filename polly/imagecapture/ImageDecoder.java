@@ -16,6 +16,13 @@ public class ImageDecoder {
 	public String decodeBelow(long timeout) {
 		return decode(timeout, 1);
 	}
+	/**
+	 * How or hid the javaWindow that displays pictures taken by the drone
+	 * @param show true = show pictures, false = hide pictures
+	 */
+	public void showPictures(boolean show){
+		DisplayCameraImage.showWindow = show;
+	}
 
 	/**
 	 * continuously attempts to take a picture and decode a QR code if present

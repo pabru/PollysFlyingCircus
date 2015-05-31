@@ -29,6 +29,7 @@ public class DisplayCameraImage {
 	 * Camera Selection: 0 = front, 1 = bottom
 	 */
 	static int cameraSelection = 0;
+	static boolean showWindow = true;
 
 	public static BufferedImage takePicture() {// was main class in example code
 		byte[] ip_bytes = new byte[4];
@@ -43,7 +44,9 @@ public class DisplayCameraImage {
 
 			send_at_cmd("AT*CONFIG=605,\"video:video_channel\",\""
 					+ cameraSelection + "\"");
-			openJavaWindow();
+			if(showWindow == true){
+				openJavaWindow();
+			}
 			BufferedImage im = CaptureDroneImage();
 			updateJavaWindow(im);
 			CloseDrone();// ?
@@ -190,7 +193,9 @@ public class DisplayCameraImage {
 	}
 
 	public static void updateJavaWindow(BufferedImage javaImage) {
+		if(mScreen != null){
 		mScreen.setImage(javaImage);
+		}
 	}
 
 	public static void openJavaWindow() {
