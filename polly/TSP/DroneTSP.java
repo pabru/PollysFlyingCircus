@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class DroneTSP {
 	
-	private static String FILEPATH = "/Users/adam/Desktop/DroneTestData.txt";
+	private static String FILEPATH = "./DroneTestData.txt";
 	private final static String SEP = ",";
 	
 	//Simulated Annealing 

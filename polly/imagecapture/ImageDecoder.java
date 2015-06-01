@@ -17,7 +17,7 @@ public class ImageDecoder {
 		return decode(timeout, 1);
 	}
 	/**
-	 * How or hid the javaWindow that displays pictures taken by the drone
+	 * Show or hide the javaWindow that displays pictures taken by the drone
 	 * @param show true = show pictures, false = hide pictures
 	 */
 	public void showPictures(boolean show){
