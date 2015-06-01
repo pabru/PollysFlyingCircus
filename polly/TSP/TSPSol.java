@@ -2,8 +2,11 @@ package polly.TSP;
 
 import java.util.ArrayList;
 
-public class tspsol {
-	//solution representation or tour
+/*
+ * Class used to represent TSP solutions
+ */
+public class TSPSol {
+		//solution representation or tour
 		private ArrayList<Integer> rep = new ArrayList<Integer>();
 		//solution fitness
 		private double fitness = -1;
@@ -14,7 +17,7 @@ public class tspsol {
 		
 		//construct a new solution with given representation
 		//used for copying solution object
-		public tspsol(tspsol copy){
+		public TSPSol(TSPSol copy){
 			rep = new ArrayList<Integer>(copy.getRep());
 			N = rep.size();
 			fitness = copy.getFitness();
@@ -22,7 +25,7 @@ public class tspsol {
 		}
 			
 		//construct a new random solution
-		public tspsol(double [][] d){
+		public TSPSol(double [][] d){
 			this.d = d; //distance matrix
 			N = this.d.length; //number of cities 
 			generateRandomSolution();
@@ -36,7 +39,7 @@ public class tspsol {
 			}
 			
 			while (P.size() > 0){
-				int m = utility.UI(0, P.size()-1);
+				int m = Utility.UI(0, P.size()-1);
 				rep.add(P.get(m));
 				P.remove(m);
 			}
@@ -73,12 +76,12 @@ public class tspsol {
 		}
 		
 		//make a small change to tour/solution
-		//by swap a pair of randomly chosen cities
+		//by swapping a pair of randomly chosen cities
 		public void smallChange() {
 			int i=0, j = 0;
 			while (i==j){
-				i=utility.UI(0, rep.size()-1);
-				j=utility.UI(0, rep.size()-1);
+				i=Utility.UI(0, rep.size()-1);
+				j=Utility.UI(0, rep.size()-1);
 			}
 			//swap the two cities
 			int temp = rep.get(i);

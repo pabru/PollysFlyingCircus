@@ -1,11 +1,14 @@
 package polly.TSP;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Scanner;
 
+/*
+ * Class containing SA algorithm and its requisites
+ * Prims MST related methods are used for efficiency rating
+ */
 public class DroneTSP {
 	
 	private static String FILEPATH = "/Users/adam/Desktop/DroneTestData.txt";
@@ -22,6 +25,7 @@ public class DroneTSP {
 	//coordinates of qrcodes
 	double[][] c;
 	
+	//distance matrix of qrcode coordinates
 	double[][] d;
 	
 	double[][] SolutionSet;
@@ -37,12 +41,14 @@ public class DroneTSP {
 	    } else if (s.equals("n")){
 	    	System.out.println("Enter path to coordinate file");
 	    	FILEPATH = in.nextLine();
+	    	in.close();
+	    	
 	    	runSA();
 	    }
 	    
 	}
 	
-	public void createResultCoordinateArray(tspsol sol){
+	public void createResultCoordinateArray(TSPSol sol){
 		ArrayList<Integer> rep = new ArrayList<Integer>(sol.getRep());
 		SolutionSet = new double[c.length][4];
 
@@ -59,31 +65,26 @@ public class DroneTSP {
 	}
 	
 	public void runSA(){
-		c = utility.ReadArrayFile(FILEPATH, SEP);
+		c = Utility.ReadArrayFile(FILEPATH, SEP);
 		
 		d = new double[c.length][c.length];
 		DistanceCalculation distanceCalculation = new DistanceCalculation(c);
 		d = distanceCalculation.getDistanceMatrix();
-
-//		for(int i=0; i<d.length;i++){
-//		for(int j=0; j<d[0].length;j++){
-//			System.out.print(d[i][j] + " ");
-//		}
-//		System.out.println("");
-//		
-//	}
-		tspsol firstsol = new tspsol(d);
-		prepareSA(ITERATIONS, 100); //generating lamba - cooling rate
-		tspsol  sol = SA(firstsol, 100, COOLING_RATE);
+		TSPSol firstsol = new TSPSol(d);
+		
+		//generating lamba (cooling rate)
+		prepareSA(ITERATIONS, 100); 
+		TSPSol  sol = SA(firstsol, 100, COOLING_RATE);
+		
 		rateEfficiency(sol);
 		createResultCoordinateArray(sol);
 	}
 	
-	public tspsol SA(tspsol sol, double temperature, double coolingrate){
+	public TSPSol SA(TSPSol sol, double temperature, double coolingRate){
 		for (int i=0; i<ITERATIONS; i++){
 			sol.calculateFitness();
 			
-			tspsol copysol = new tspsol(sol); 
+			TSPSol copysol = new TSPSol(sol); 
 			
 			sol.smallChange();
 			
@@ -91,10 +92,10 @@ public class DroneTSP {
 			
 			//if new solution is worse than old
 			if (sol.getFitness() > copysol.getFitness()){
-				double p = utility.PRSA(sol.getFitness(), copysol.getFitness(), temperature);
-				if (p<utility.UR(1,0)){
+				double p = Utility.PRSA(sol.getFitness(), copysol.getFitness(), temperature);
+				if (p<Utility.UR(1,0)){
 					//reject change
-					sol = new tspsol(copysol);
+					sol = new TSPSol(copysol);
 				} else {
 					//do nothing and accept change
 				} 
@@ -105,7 +106,7 @@ public class DroneTSP {
 			System.out.println(i + "\t " + sol.getFitness() + "\t " + temperature);
 			appendResultSet(i, sol.getFitness());
 			
-			temperature*=coolingrate;
+			temperature*=coolingRate;
 		}
 		
 		return sol;
@@ -128,7 +129,7 @@ public class DroneTSP {
         }
 	
 	/**
-	 * method used to calculate coolingrate  
+	 * used to calculate coolingrate  
 	 * @param iter
 	 * @param temperature
 	 */
@@ -137,7 +138,7 @@ public class DroneTSP {
 		System.out.println(COOLING_RATE);
 	}
 	
-	public static void rateEfficiency(tspsol sol){
+	public static void rateEfficiency(TSPSol sol){
 		double MST[][] = PrimsMST(sol.getDistanceMatrix());
 		double MSTedgelength = 0;
 		for (int x=0;x<MST.length;x++){
@@ -147,11 +148,13 @@ public class DroneTSP {
 		}
 		System.out.println(((MSTedgelength/sol.getFitness()) * 100) + "%");
 	}
+	
 	/**
 	 * Prims MST
 	 * @param distanceMatrix
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private static double[][] PrimsMST(double[][] d)
 	{
 		int i,j,n = d.length;
@@ -187,27 +190,27 @@ public class DroneTSP {
 	}
 	
 	//Search for the next applicable edge
-		static private Edge LocateEdge(ArrayList<Integer> v,ArrayList<Edge> edges)
+	static private Edge LocateEdge(ArrayList<Integer> v,ArrayList<Edge> edges)
+	{
+		for (Iterator<Edge> it = edges.iterator(); it.hasNext();)
 		{
-			for (Iterator<Edge> it = edges.iterator(); it.hasNext();)
+	        Edge e = it.next();
+			int x = e.i;
+			int y = e.j;
+			int xv = v.indexOf(x);
+			int yv = v.indexOf(y);
+			if (xv > -1 && yv == -1)
 			{
-		        Edge e = it.next();
-				int x = e.i;
-				int y = e.j;
-				int xv = v.indexOf(x);
-				int yv = v.indexOf(y);
-				if (xv > -1 && yv == -1)
-				{
-					return(e);
-				}
-				if (xv == -1 && yv > -1)
-				{
-					return(e);
-				}
+				return(e);
 			}
-			//Error condition
-			return(new Edge(-1,-1,0.0));
+			if (xv == -1 && yv > -1)
+			{
+				return(e);
+			}
 		}
+		//Error condition
+		return(new Edge(-1,-1,0.0));
+	}
 	
 	public double[][] getResult(){
 		return SolutionSet;

@@ -7,7 +7,7 @@ import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class utility {
+public class Utility {
 	
 	static private Random rand;
 	//Create a uniformly distributed random integer between aa and bb inclusive

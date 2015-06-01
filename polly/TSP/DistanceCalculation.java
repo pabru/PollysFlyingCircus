@@ -2,6 +2,10 @@ package polly.TSP;
 
 import java.io.IOException;
 
+/*
+ * Class used to generate a distance matrix between 3 dimensional points
+ * in a space. Places distance matrix in a 2D array
+ */
 public class DistanceCalculation {
 	double[][] distances;
 	private boolean run = false;
