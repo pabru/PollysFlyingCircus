@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 /*
+ * Modifications for fixed starting point TSP
+ * Starting point is first point in coordinates fed in
+ * 
  * Class containing SA algorithm and its requisites
  * Prims MST related methods are used for efficiency rating
  */
@@ -19,8 +22,9 @@ public class DroneTSP {
 	private final static double T_ITER = 0.001;
 	
 	private static ArrayList<String> SARESULTSET = new ArrayList<String>();
-
-	int ITERATIONS = 100000;
+	
+	//default of one million iterations
+	int ITERATIONS = 1000000;
 	
 	//coordinates of qrcodes
 	double[][] c;

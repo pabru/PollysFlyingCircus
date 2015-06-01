@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 /*
  * Class used to represent TSP solutions
+ * Solutions generated randomly and small changes made to solutions avoid changing the starting point
+ * This is to maintain a fixed starting point for every TSP tour 
  */
+
 public class TSPSol {
 		//solution representation or tour
 		private ArrayList<Integer> rep = new ArrayList<Integer>();
@@ -14,6 +17,9 @@ public class TSPSol {
 		private int N = -1;
 		//distance matrix
 		private double[][] d;
+		
+		//index of starting point is always the 1st or 0th coordinate
+		private static final int STARTING_POINT = 0;
 		
 		//construct a new solution with given representation
 		//used for copying solution object
@@ -31,12 +37,23 @@ public class TSPSol {
 			generateRandomSolution();
 		}
 		
-		//create a random solution
+		/*
+		 * Create a random solution
+		 * Starting point of this random solution is the same 
+		 * as the starting point of the file or coordinates fed into
+		 * TSP 
+		 */
 		private void generateRandomSolution() {
 			ArrayList<Integer> P  = new ArrayList<Integer>(N);
-			for (int t = 0; t<N; t++){
+			
+			//P - is index array of all cities that can be swapped
+			//limit P here to everything after 0 (to keep the same staring point)
+			for (int t = 1; t<N; t++){
 				P.add(t);
 			}
+			
+			//add starting point of 0, always the same location
+			rep.add(STARTING_POINT);
 			
 			while (P.size() > 0){
 				int m = Utility.UI(0, P.size()-1);
@@ -58,6 +75,7 @@ public class TSPSol {
 		public double[][] getDistanceMatrix(){
 			return d;
 		}
+		
 		//evaluate fitness of solution
 		public void calculateFitness() {
 			double sum = 0;
@@ -75,13 +93,17 @@ public class TSPSol {
 			fitness = sum;
 		}
 		
-		//make a small change to tour/solution
-		//by swapping a pair of randomly chosen cities
+		/*
+		 *Make a small change to tour/solution
+		 *by swapping a pair of randomly chosen cities
+		 *Method deliberately limits seclection to between 1 and end of 
+		 *representation. This is done to avoid changing the start point.
+		*/
 		public void smallChange() {
 			int i=0, j = 0;
 			while (i==j){
-				i=Utility.UI(0, rep.size()-1);
-				j=Utility.UI(0, rep.size()-1);
+				i=Utility.UI(1, rep.size()-1);
+				j=Utility.UI(1, rep.size()-1);
 			}
 			//swap the two cities
 			int temp = rep.get(i);
