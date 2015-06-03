@@ -10,6 +10,7 @@ import com.xuggle.xuggler.ICodec;
 import com.xuggle.xuggler.IContainer;
 import com.xuggle.xuggler.IPacket;
 import com.xuggle.xuggler.IPixelFormat;
+import com.xuggle.xuggler.IRational;
 import com.xuggle.xuggler.IStream;
 import com.xuggle.xuggler.IStreamCoder;
 import com.xuggle.xuggler.IVideoPicture;
@@ -107,6 +108,7 @@ public class DisplayCameraImage {
 				break;
 			}
 		}
+
 		if (videoStreamId == -1) {
 			// CloseDrone();
 			System.out.println("could not find video stream in container");

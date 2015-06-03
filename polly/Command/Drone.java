@@ -50,11 +50,23 @@ public class Drone {
 	public static void goForward(float speed) throws IOException{
 		transmitPCMDCommand(PCMD.PITCH_GO_FORWARD, -speed);
 	}
+	public static void goBackward(float speed) throws IOException{
+		transmitPCMDCommand(PCMD.PITCH_GO_FORWARD, speed);
+	}
 	public static void goUp(float speed) throws IOException{
 		transmitPCMDCommand(PCMD.ALTITUDE_GO_UP, speed);
 	}
+	public static void goDown(float speed) throws IOException{
+		transmitPCMDCommand(PCMD.ALTITUDE_GO_UP, -speed);
+	}
 	public static void turnClockWise(float speed) throws IOException{
 		transmitPCMDCommand(PCMD.TURN_TURN_CLOCKWISE, speed);
+	}
+	public static void goLeft(float speed) throws IOException{
+		transmitPCMDCommand(PCMD.PITCH_GO_LEFT, -speed);
+	}
+	public static void goRight(float speed) throws IOException{
+		transmitPCMDCommand(PCMD.PITCH_GO_LEFT, speed);
 	}
 	
 	public static void sendRawATCommand(String atCommandString) throws IOException{

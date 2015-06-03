@@ -35,20 +35,23 @@ public class ImageDecoder {
 	 * @return
 	 */
 	private String decode(long timeout, int cameraPosition) {
+		int decodeAttempts = 0;
 		String result = "";
 		long start = System.currentTimeMillis();
 		long elapsedTime = 0;
 		BufferedImage picture;
 		DisplayCameraImage.setCameraSelection(cameraPosition);
 		do {
-			picture = DisplayCameraImage.takePicture();// try calling CaptureDroneImage
+			picture = DisplayCameraImage.takePicture();
 			result = decoder.decodeImage(picture);
+			decodeAttempts ++;
 			if (result.equals("")) {
 				elapsedTime = System.currentTimeMillis() - start;
 			} else {
 				elapsedTime = timeout;
 			}
 		} while (elapsedTime < timeout);
+		System.out.println("decoded attempts: "+ decodeAttempts);
 		return result;
 	}
 

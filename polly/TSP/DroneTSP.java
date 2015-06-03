@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class DroneTSP {
 	
-	private static String FILEPATH = "./DroneTestData.txt";
+	private static String FILEPATH = "./TestData.txt";
 	private final static String SEP = ",";
 	
 	//Simulated Annealing 
@@ -34,7 +34,10 @@ public class DroneTSP {
 	
 	double[][] SolutionSet;
 	
+	boolean predefinedTSP = true;
+	
 	public DroneTSP() {
+		if(predefinedTSP == false){
 		System.out.println("Is file path set to its default y/n");
 		Scanner in = new Scanner(System.in);
 		 
@@ -49,6 +52,7 @@ public class DroneTSP {
 	    	
 	    	runSA();
 	    }
+		}
 	    
 	}
 	
@@ -215,8 +219,40 @@ public class DroneTSP {
 		//Error condition
 		return(new Edge(-1,-1,0.0));
 	}
-	
+	/*
+	 * 
+	 */
 	public double[][] getResult(){
+		if(predefinedTSP == true){
+			double path [][]={
+					//orig solution
+					/*
+					{0,0,0,1},
+					{-5.74, -1.16, 0.0, 1.0 },
+					{-9.01, -0.96, 0.76, 0.0 },
+					{-4.35, 1.86, 0.0, 1.0 },
+					{-5.33, 8.23, 0.0, 1.0 },
+					{-3.2, 5.43, 0.0, 1.0 },
+					{-0.6, 4.68, 0.0, 1.0 },
+					{3.1, 7.5, 0.0, 1.0 },
+					{8.14, 7.19, 0.0, 1.0 },
+					{10.73, 4.98, 1.39, 0.0}};
+					*/
+	
+			//temp alter to avoid crash
+			{0,0,0,1},
+			{-4.35, 1.86, 0.0, 1.0 },
+			{-5.33, 8.23, 0.0, 1.0 },
+			{-3.2, 5.43, 0.0, 1.0 },
+			{-0.6, 4.68, 0.0, 1.0 },
+			{3.1, 7.5, 0.0, 1.0 },
+			{8.14, 7.19, 0.0, 1.0 },
+			{10.73, 4.98, 1.39, 0.0},
+			{-9.01, -0.96, 0.76, 0.0 },
+			{-5.74, -1.16, 0.0, 1.0 }};
+			return path;
+		}else{
 		return SolutionSet;
+		}
 	}
 }
